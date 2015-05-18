@@ -33,6 +33,7 @@ namespace EX_Converter
         private int numL1;
         private int numL2;
         private int numName;
+        private int numNamePrefix;
         private int numSummary;
         private int numPreconditions;
         private int numImportance;
@@ -106,6 +107,8 @@ namespace EX_Converter
                 return false;
 
             if (!this.ValidateColumn(this.textBoxName.Text, ref numName))
+                return false;
+            if (!this.ValidateColumn(this.textBoxNamePrefix.Text, ref numNamePrefix))
                 return false;
             if (!this.ValidateColumn(this.textBoxSummary.Text, ref numSummary))
                 return false;
@@ -225,6 +228,7 @@ namespace EX_Converter
                     this.numL1,
                     this.numL2,
                     this.numName,
+                    this.numNamePrefix,
                     this.numSummary,
                     this.numPreconditions,
                     this.numImportance,

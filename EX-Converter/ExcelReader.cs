@@ -45,6 +45,7 @@ namespace EX_Converter
         private int L2_FolderIndex { get; set; }
 
         private int NameColumnIndex { get; set; }
+        private int NamePrefixColumnIndex { get; set; }
         private int SummaryColumnIndex { get; set; }
         private int PreconditionsColumnIndex { get; set; }
         private int ImportanceColumnIndex { get; set; }
@@ -66,7 +67,7 @@ namespace EX_Converter
         public ExcelReader(string excelPath, bool readCase, bool l2Enabled, bool allowDupSuite,
                             int activeSheet, int startRow, int endRow,
                             int folderL1, int folderL2,
-                            int caseName, int summary, int preconditions, int importance,
+                            int caseName, int caseNamePrefix, int summary, int preconditions, int importance,
                             int actions, int expected)
         {
             this.FilePath = excelPath;
@@ -81,6 +82,7 @@ namespace EX_Converter
             this.L2_FolderIndex = folderL2;
 
             this.NameColumnIndex = caseName;
+            this.NamePrefixColumnIndex = caseNamePrefix;
             this.SummaryColumnIndex = summary;
             this.PreconditionsColumnIndex = preconditions;
             this.ImportanceColumnIndex = importance;
@@ -761,10 +763,17 @@ namespace EX_Converter
                             L2Value = Convert.ToString(((Range)destSheet.Cells[row, this.L2_FolderIndex]).get_Value(missing));
                         }
 
+                        string namePrefixValue = null;
+                        if (this.NamePrefixColumnIndex != 0)
+                        {
+                            namePrefixValue =
+                                Convert.ToString(((Range)destSheet.Cells[row, this.NamePrefixColumnIndex]).get_Value(missing));
+                        }
+
                         string nameValue = null;
                         if (this.NameColumnIndex != 0)
                         {
-                            nameValue =
+                            nameValue = namePrefixValue +
                                 Convert.ToString(((Range)destSheet.Cells[row, this.NameColumnIndex]).get_Value(missing));
                         }
 
